@@ -48,15 +48,14 @@ export class Player{
 
     }
     draw(context){
-        //context.fillStyle ='red';
-        //context.fillRect(this.x,this.y,this.width,this.height);
         context.drawImage(this.image,this.frameX * this.width,this.frameY * this.height,this.width, this.height, this.x,this.y, this.width, this.height);
     }
     onGround(){
         return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
-    setState(state){
+    setState(state, speed){
         this.currentState = this.states[state];
+        this.game.speed = this.game.maxSpeed * speed;
         this.currentState.enter();
     }
 

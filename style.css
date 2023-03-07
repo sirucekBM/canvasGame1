@@ -14,6 +14,6 @@
     background: radial-gradient(#ffc38c,#ff9b40);
 }
 
-#player, #layer1, #layer2, #layer3, #layer4, #layer5{
+#player, #layer1, #layer2, #layer3, #layer4, #layer5, #enemy_fly,#enemy_plant,#enemy_spider_big{
     display: none;
 }

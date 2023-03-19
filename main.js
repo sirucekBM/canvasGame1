@@ -2,6 +2,7 @@ import { Player } from './player.js';
 import { InputHandler } from './input.js';
 import { Background } from './background.js';
 import { FlyingEnemy, GroundEnemy, ClimbingEnemy} from './enemies.js';
+import { LaserWeapon } from './weapons.js';
 import { UI } from './UI.js';
 
 window.addEventListener('load',function(){
@@ -23,6 +24,7 @@ window.addEventListener('load',function(){
             this.UI = new UI(this);
             this.enemies=[];
             this.particles = [];
+            this.weapons = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.debug = true;
@@ -49,6 +51,10 @@ window.addEventListener('load',function(){
             this.particles.forEach((particle, index) => {
                 particle.update();
                 if(particle.markedForDeletion) this.particles.splice(index,1);
+            });
+            this.weapons.forEach((weapon, index) => {
+                weapon.update();
+                if(weapon.markedForDeletion) this.weapons.splice(index,1);
             })
         }
         draw(context){
@@ -57,16 +63,22 @@ window.addEventListener('load',function(){
             this.enemies.forEach(enemy =>{
                 enemy.draw(context);
             });
+            this.weapons.forEach(weapon =>{
+                weapon.draw(context);
+            });
+
             this.particles.forEach(particle =>{
                 particle.draw(context);
             });
             this.UI.draw(context);
         }
         addEnemy(){
-            if(this.speed > 0 && Math.random()<0.5)this.enemies.push(new GroundEnemy(this));
+            if(this.speed > 0 && Math.random()<0.5){
+                this.enemies.push(new GroundEnemy(this));
+            }
             else if (this.speed > 0 )this.enemies.push(new ClimbingEnemy(this));
             this.enemies.push(new FlyingEnemy(this));
-            console.log(this.enemies)
+            console.log(this.weapons);
         }
     }
 

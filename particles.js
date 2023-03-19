@@ -29,3 +29,22 @@ export class Dust extends Particle{
         context.stroke();
     }
 }
+
+export class Shot extends Particle{
+    constructor(game, x, y){
+        super(game);
+        this.size = 20;// Math.random()* 10 + 10;
+        this.x = x;
+        this.y = y;
+        this.speedX = 5;
+        this.speedY = 0;
+        this.color = 'red';
+    };
+    draw(context){
+        context.beginPath();
+        context.arc(this.x, this.y, this.size,0,Math.PI * 2);
+        context.fillStyle = this.color;
+        context.fill();
+    }
+
+}

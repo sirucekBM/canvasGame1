@@ -1,4 +1,5 @@
-import { Dust } from './particles.js';
+import { Dust, Shot } from './particles.js';
+import { LaserWeapon } from './weapons.js';
 
 
 const states = {
@@ -6,6 +7,7 @@ const states = {
     RUNNING: 1,
     JUMPING: 2,
     FALLING: 3,
+    SHOOTING: 4,
 }
 
 class State{
@@ -42,10 +44,13 @@ export class Running extends State{
     }
     handleInput(input){
         this.game.particles.push(new Dust(this.game, this.game.player.x, this.game.player.y));
+        
         if(input.includes('ArrowDown')){
             this.game.player.setState(states.SITTING,0);
         } else if(input.includes('ArrowUp')){
             this.game.player.setState(states.JUMPING,1); 
+        }else if(input.includes(' ')){
+            this.game.player.setState(states.SHOOTING,1); 
         }
     }
 }
@@ -61,8 +66,10 @@ export class Jumping extends State{
         this.game.player.frameY = 1;
     }
     handleInput(input){
+        console.log('vyskocil jsem');
         if(this.game.player.vy > this.game.player.weight){
             this.game.player.setState(states.FALLING,1);
+            //this.game.player.setState(states.SHOOTING,1);
         }
     }
 }
@@ -80,5 +87,27 @@ export class Falling extends State{
         if(this.game.player.onGround()){
             this.game.player.setState(states.RUNNING,1);
         }
+    }
+}
+
+export class Shooting extends State{
+    constructor(game){
+        super('SHOOTING',game);
+    }
+    enter(){
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 6;
+        this.game.player.frameY = 2;
+    }
+    handleInput(input){
+        console.log('vystelil jsem');
+        //this.game.particles.push(new Shot(this.game, this.game.player.x, this.game.player.y));
+        this.game.weapons.push(new LaserWeapon(this.game, this.game.player.x, this.game.player.y));
+        this.game.player.setState(states.RUNNING,1);
+       // if(input.includes('ArrowDown')){
+        //    this.game.player.setState(states.SITTING,0);
+       // } else if(input.includes('ArrowUp')){
+       //     this.game.player.setState(states.JUMPING,1); 
+       // }
     }
 }

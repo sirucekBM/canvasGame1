@@ -6,6 +6,7 @@ class Weapon{
     update(){
         this.x +=10;
         if(this.x > this.game.width)this.markedForDeletion = true;
+        this.checkCollisionWeapon();
     }
 }
 
@@ -25,4 +26,25 @@ export class LaserWeapon extends Weapon{
         context.fillStyle = this.color;
         context.fill();
     }
+
+    checkCollisionWeapon(){
+        this.game.enemies.forEach(enemy => {
+            if(
+                enemy.x < this.x  && enemy.x + enemy.width >this.x && enemy.y < this.y  && enemy.y + enemy.height >this.y
+            ){
+                enemy.markedForDeletion = true;
+                this.markedForDeletion = true;
+                this.game.score++;
+                if (enemy.type =="flying"){
+                    this.game.ammo += 10;
+                }
+
+
+            }else{
+
+            }
+        });
+
+    }
+
 }

@@ -1,5 +1,4 @@
 import { Dust, Shot } from './particles.js';
-import { LaserWeapon } from './weapons.js';
 
 
 const states = {
@@ -66,10 +65,10 @@ export class Jumping extends State{
         this.game.player.frameY = 1;
     }
     handleInput(input){
-        console.log('vyskocil jsem');
         if(this.game.player.vy > this.game.player.weight){
             this.game.player.setState(states.FALLING,1);
             //this.game.player.setState(states.SHOOTING,1);
+            //this.game.player.setState(states.RUNNING,1);
         }
     }
 }
@@ -86,6 +85,8 @@ export class Falling extends State{
     handleInput(input){
         if(this.game.player.onGround()){
             this.game.player.setState(states.RUNNING,1);
+        }else{
+            this.game.player.setState(states.SHOOTING,1);
         }
     }
 }
@@ -95,19 +96,22 @@ export class Shooting extends State{
         super('SHOOTING',game);
     }
     enter(){
-        this.game.player.frameX = 0;
-        this.game.player.maxFrame = 6;
-        this.game.player.frameY = 2;
+        //this.game.player.frameX = 0;
+        //this.game.player.maxFrame = 0;
+        //this.game.player.frameY = 0;
     }
     handleInput(input){
-        console.log('vystelil jsem');
-        //this.game.particles.push(new Shot(this.game, this.game.player.x, this.game.player.y));
-        this.game.weapons.push(new LaserWeapon(this.game, this.game.player.x, this.game.player.y));
-        this.game.player.setState(states.RUNNING,1);
-       // if(input.includes('ArrowDown')){
-        //    this.game.player.setState(states.SITTING,0);
-       // } else if(input.includes('ArrowUp')){
-       //     this.game.player.setState(states.JUMPING,1); 
-       // }
+        console.log("input: " + input)
+        if(input.includes(' ')){
+                this.game.player.shotProjectile(Date.now());
+        }else{
+            if(input.includes('ArrowUp')){
+                this.game.player.setState(states.JUMPING,1); 
+            }else if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
+                this.game.player.setState(states.RUNNING,1);
+            }else if(this.game.player.onGround()){
+                this.game.player.setState(states.RUNNING,1);
+            }
+        }
     }
 }

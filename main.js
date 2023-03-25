@@ -8,7 +8,7 @@ import { UI } from './UI.js';
 window.addEventListener('load',function(){
     const canvas = this.document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 500;
+    canvas.width = 800;
     canvas.height = 500;
 
     class Game{
@@ -25,10 +25,13 @@ window.addEventListener('load',function(){
             this.enemies=[];
             this.particles = [];
             this.weapons = [];
+            this.explosions = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
-            this.debug = true;
+            this.debug = false;
             this.score = 0;
+            this.ammo = 30;
+            this.gameOver = false;
             this.fontColor = 'black';
             this.player.currentState = this.player.states[0];
             this.player.currentState.enter();
@@ -56,6 +59,10 @@ window.addEventListener('load',function(){
                 weapon.update();
                 if(weapon.markedForDeletion) this.weapons.splice(index,1);
             })
+            this.explosions.forEach((explosion, index) => {
+                explosion.update();
+                if(explosion.markedForDeletion) this.explosions.splice(index,1);
+            })
         }
         draw(context){
             this.background.draw(context);
@@ -70,6 +77,11 @@ window.addEventListener('load',function(){
             this.particles.forEach(particle =>{
                 particle.draw(context);
             });
+
+            this.explosions.forEach(explosion =>{
+                explosion.draw(context);
+            });
+
             this.UI.draw(context);
         }
         addEnemy(){
@@ -78,8 +90,8 @@ window.addEventListener('load',function(){
             }
             else if (this.speed > 0 )this.enemies.push(new ClimbingEnemy(this));
             this.enemies.push(new FlyingEnemy(this));
-            console.log(this.weapons);
         }
+
     }
 
     const game = new Game(canvas.width,canvas.height);
@@ -92,7 +104,7 @@ window.addEventListener('load',function(){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         game.update(deltaTime);
         game.draw(ctx);
-        requestAnimationFrame(animate);
+        if(!game.gameOver)requestAnimationFrame(animate);
     }
     animate(0);
 });

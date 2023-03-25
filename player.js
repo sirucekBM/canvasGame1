@@ -1,4 +1,6 @@
 import { Sitting, Running, Jumping,  Falling, Shooting } from "./playerStates.js";
+import { LaserWeapon } from './weapons.js';
+import { FireExplosion } from './explosion.js';
 
 export class Player{
     constructor(game){
@@ -14,10 +16,12 @@ export class Player{
         this.frameY = 0;
         this.maxFrame = 5;
         this.fps = 20;
+        this.lives = 10;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
         this.speed = 0;
         this.maxSpeed = 10;
+        this.timeStampProjectile = 0;
         this.states = [new Sitting(this.game),new Running(this.game),new Jumping(this.game), new Falling(this.game), new Shooting(this.game)];
 
     }
@@ -61,16 +65,36 @@ export class Player{
         this.currentState.enter();
         
     }
+
+    shotProjectile(stampTime){
+        if(this.game.ammo > 0 && stampTime - this.timeStampProjectile > 100){
+            this.timeStampProjectile = stampTime;
+            this.game.weapons.push(new LaserWeapon(this.game, this.x + this.width-20, this.y+20));
+            this.game.ammo -= 1;
+        }
+        
+    }
+
+
     checkCollision(){
         this.game.enemies.forEach(enemy => {
             if(
                 enemy.x < this.x +this.width && enemy.x + enemy.width >this.x && enemy.y < this.y + this.height && enemy.y + enemy.height >this.y
             ){
+                this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2));
                 enemy.markedForDeletion = true;
-                this.game.score++;
+                if(enemy.type=="ground" || enemy.type =="spider"){
+                    this.lives -=1;
+                }else{
+                    this.game.score++;
+                    this.game.ammo +=1;
+                }
             }else{
 
             }
+
+            if(this.lives<1)this.game.gameOver = true;
+
         });
 
     }

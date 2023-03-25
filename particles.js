@@ -25,6 +25,7 @@ export class Dust extends Particle{
         context.beginPath();
         context.arc(this.x, this.y, this.size,0,Math.PI * 2);
         context.fillStyle = this.color;
+        context.strokeStyle  = this.color;
         //context.fill();
         context.stroke();
     }
@@ -41,10 +42,10 @@ export class Shot extends Particle{
         this.color = 'red';
     };
     draw(context){
-        context.beginPath();
-        context.arc(this.x, this.y, this.size,0,Math.PI * 2);
-        context.fillStyle = this.color;
-        context.fill();
+       // context.beginPath();
+       // context.arc(this.x, this.y, this.size,0,Math.PI * 2);
+       // context.fillStyle = this.color;
+       // context.fill();
     }
 
 }

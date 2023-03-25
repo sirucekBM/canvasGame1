@@ -31,6 +31,7 @@ class Enemy{
 export class FlyingEnemy extends Enemy{
     constructor(game){
         super();
+        this.type ="flying";
         this.game = game;
         this.width = 60;
         this.height = 44;
@@ -53,6 +54,7 @@ export class FlyingEnemy extends Enemy{
 export class GroundEnemy extends Enemy{
     constructor(game){
         super();
+        this.type ="ground";
         this.game = game;
         this.width = 60;
         this.height = 87;
@@ -68,6 +70,7 @@ export class GroundEnemy extends Enemy{
 export class ClimbingEnemy extends Enemy{
     constructor(game){
         super();
+        this.type ="spider";
         this.game = game;
         this.width = 120;
         this.height = 144;

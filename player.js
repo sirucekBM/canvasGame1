@@ -81,13 +81,19 @@ export class Player{
             if(
                 enemy.x < this.x +this.width && enemy.x + enemy.width >this.x && enemy.y < this.y + this.height && enemy.y + enemy.height >this.y
             ){
-                this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2));
+                
                 enemy.markedForDeletion = true;
                 if(enemy.type=="ground" || enemy.type =="spider"){
                     this.lives -=1;
+                    for (let i = 0; i < 5; i++) {
+                        this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2,'red'));
+                    }
                 }else{
                     this.game.score++;
                     this.game.ammo +=1;
+                    for (let i = 0; i < 5; i++) {
+                        this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2,'green'));
+                    }
                 }
             }else{
 

@@ -6,20 +6,20 @@ class Explosion{
     update(){
         this.x -= this.speedX + this.game.speed-2;
         //this.y -= this.speedY;
-        this.size *= 1.95;//speed sizing
-        if(this.size >200)this.markedForDeletion = true;
+        this.size *= 1.1;//speed sizing
+        if(this.size >50)this.markedForDeletion = true;
     }
 }
 
 export class FireExplosion extends Explosion{
-    constructor(game, x, y){
+    constructor(game, x, y,color){
         super(game);
-        this.size = 20;// Math.random()* 10 + 10;
+        this.size =  Math.random()* 3 + 2;
         this.x = x;
         this.y = y;
-        this.speedX = Math.random();
-        this.speedY = Math.random();
-        this.color = 'red';
+        this.speedX = 0;
+        this.speedY = Math.random()*4;
+        this.color = color;
     };
     draw(context){
         context.save();

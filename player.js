@@ -16,7 +16,6 @@ export class Player{
         this.frameY = 0;
         this.maxFrame = 5;
         this.fps = 20;
-        this.lives = 1;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
         this.speed = 0;
@@ -93,7 +92,7 @@ export class Player{
                 
                 enemy.markedForDeletion = true;
                 if(enemy.type=="ground" || enemy.type =="spider"){
-                    this.lives -=1;
+                    this.game.lives -=1;
                     for (let i = 0; i < 5; i++) {
                         this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2,'red'));
                     }
@@ -108,7 +107,7 @@ export class Player{
 
             }
 
-            if(this.lives<1)this.game.gameOver = true;
+            if(this.game.lives<1)this.game.gameOver = true;
 
         });
 

@@ -10,14 +10,16 @@ window.addEventListener('load',function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 800;
     canvas.height = 500;
+    const startLives = 3;
 
     class Game{
-        constructor(width,height){
+        constructor(width,height,lives){
             this.width = width;
             this.height = height;
             this.groundMargin = 80;
             this.background = new Background(this);
             this.speed = 0;
+            this.lives = lives;
             this.maxSpeed = 3;
             this.player = new Player(this);
             this.input = new InputHandler(this);
@@ -86,14 +88,19 @@ window.addEventListener('load',function(){
         }
 
         restart(){
-            this.player.x = 0;
-            this.player.y = this.height - this.player.height - this.groundMargin;
-            this.player.frameY = 0;
-            this.player.maxFrame = 5;
-            this.gameOver = false;
-            this.player.lives = 1;
-            this.enemies=[];
-            animate(0);
+           // if(this.gameOver){
+                lastTime = 0;
+                this.player.x = 0;
+                this.player.y = this.height - this.player.height - this.groundMargin;
+                this.player.frameY = 0;
+                this.player.maxFrame = 5;
+                this.gameOver = false;
+                this.lives = startLives;
+                this.enemies=[];
+                this.speed = 0;
+                this.player.speed = 0;
+                animate(0);
+            //}
         }
 
 
@@ -109,7 +116,7 @@ window.addEventListener('load',function(){
 
     }
 
-    const game = new Game(canvas.width,canvas.height);
+    const game = new Game(canvas.width,canvas.height,startLives);
     console.log(game);
     let lastTime = 0;
 
@@ -124,12 +131,12 @@ window.addEventListener('load',function(){
 
 
 
-    document.addEventListener("keydown", (e) => {
-        e.preventDefault();
-        if (e.key === 'Enter') {
-            game.restart();
-        }
-    });
+   // document.addEventListener("keydown", (e) => {
+   //     e.preventDefault();
+    //    if (e.key === 'zEnter') {
+   //         game.restart();
+   //     }
+  //  });
 
 
     animate(0);

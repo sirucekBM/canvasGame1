@@ -17,9 +17,8 @@ export class InputHandler{
                 this.game.debug = !this.game.debug;
             }
             
-            if(e.key === 'zEnter'){
-                this.game.debug = !this.game.debug && this.game.gameOver
-                this.game.restart();
+            if(e.key === 'Enter'){
+                if(this.game.gameOver)this.game.restart();
             }
 
         });

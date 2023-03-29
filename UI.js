@@ -16,7 +16,7 @@ export class UI{
 
         context.fillText('Score: ' + this.game.score,20,50);
         context.fillText('Ammo: ' + this.game.ammo,20,90);
-        context.fillText('Lives: ' + this.game.player.lives,20,130);
+        context.fillText('Lives: ' + this.game.lives,20,130);
 
         if(this.game.gameOver){
             context.textAlign = 'center';

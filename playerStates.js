@@ -42,7 +42,7 @@ export class Running extends State{
         this.game.player.maxFrame = 6;
     }
     handleInput(input){
-        this.game.particles.push(new Dust(this.game, this.game.player.x, this.game.player.y));
+        this.game.particles.push(new Dust(this.game, this.game.player.x + this.game.player.width/2-10, this.game.player.y+this.game.player.height-5));
         
         if(input.includes('ArrowDown')){
             this.game.player.setState(states.SITTING,0);

@@ -84,6 +84,21 @@ window.addEventListener('load',function(){
 
             this.UI.draw(context);
         }
+
+        restart(){
+            this.player.x = 0;
+            this.player.y = this.height - this.player.height - this.groundMargin;
+            this.player.frameY = 0;
+            this.player.maxFrame = 5;
+            this.gameOver = false;
+            this.player.lives = 1;
+            this.enemies=[];
+            animate(0);
+        }
+
+
+
+
         addEnemy(){
             if(this.speed > 0 && Math.random()<0.5){
                 this.enemies.push(new GroundEnemy(this));
@@ -106,5 +121,16 @@ window.addEventListener('load',function(){
         game.draw(ctx);
         if(!game.gameOver)requestAnimationFrame(animate);
     }
+
+
+
+    document.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        if (e.key === 'Enter') {
+            game.restart();
+        }
+    });
+
+
     animate(0);
 });

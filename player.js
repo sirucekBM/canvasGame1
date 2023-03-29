@@ -16,7 +16,7 @@ export class Player{
         this.frameY = 0;
         this.maxFrame = 5;
         this.fps = 20;
-        this.lives = 10;
+        this.lives = 1;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
         this.speed = 0;
@@ -24,6 +24,15 @@ export class Player{
         this.timeStampProjectile = 0;
         this.states = [new Sitting(this.game),new Running(this.game),new Jumping(this.game), new Falling(this.game), new Shooting(this.game)];
 
+    }
+
+    restart(){
+        this.x = 0;
+        this.y = this.game.height - this.height;
+        this.frameY = 0;
+        this.maxFrame = 5;
+        this.gameOver = false;
+        animate(0);
     }
 
     update(input,deltaTime){

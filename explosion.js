@@ -4,7 +4,7 @@ class Explosion{
     this.markedForDeletion = false;
     }
     update(){
-        this.x -= this.speedX + this.game.speed-2;
+        this.x -= this.speedX + this.game.speed;
         //this.y -= this.speedY;
         this.size *= 1.1;//speed sizing
         if(this.size >50)this.markedForDeletion = true;

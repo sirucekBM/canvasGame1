@@ -13,12 +13,15 @@ export class InputHandler{
                     
                ) && this.keys.indexOf(e.key) ===-1){
                 this.keys.push(e.key);
-            }else if (e.key === 'd')this.game.debug = !this.game.debug;
-
-
-
-
+            }else if (e.key === 'd'){
+                this.game.debug = !this.game.debug;
+            }
             
+            if(e.key === 'zEnter'){
+                this.game.debug = !this.game.debug && this.game.gameOver
+                this.game.restart();
+            }
+
         });
         window.addEventListener('keyup',e =>{
             if(e.key ==='ArrowDown' ||
@@ -33,5 +36,18 @@ export class InputHandler{
 
         });
 
+        window.addEventListener('touchstart',e=>{
+            console.log('start');
+        });
+
+        window.addEventListener('touchmove',e=>{
+            console.log('move');
+        });
+
+        window.addEventListener('touchend',e=>{
+            console.log('end');
+        });
+
     }
+
 }

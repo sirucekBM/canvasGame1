@@ -26,7 +26,7 @@ export class Sitting extends State{
         this.game.player.maxFrame = 4;
     }
     handleInput(input){
-        if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
+        if(input.includes('ArrowLeft') || input.includes('ArrowRight') || input.includes('swipe left') || input.includes('swipe right')){
             this.game.player.setState(states.RUNNING,1);
         }
     }
@@ -46,7 +46,7 @@ export class Running extends State{
         
         if(input.includes('ArrowDown')){
             this.game.player.setState(states.SITTING,0);
-        } else if(input.includes('ArrowUp')){
+        } else if(input.includes('ArrowUp') || input.includes('swipe up')){
             this.game.player.setState(states.JUMPING,1); 
         }else if(input.includes(' ')){
             this.game.player.setState(states.SHOOTING,1); 
@@ -67,8 +67,10 @@ export class Jumping extends State{
     handleInput(input){
         if(this.game.player.vy > this.game.player.weight){
             this.game.player.setState(states.FALLING,1);
-            //this.game.player.setState(states.SHOOTING,1);
-            //this.game.player.setState(states.RUNNING,1);
+        }else{
+            if(input.includes('ArrowLeft') || input.includes('ArrowRight') || input.includes('swipe left') || input.includes('swipe right')){
+                this.game.player.setState(states.RUNNING,1);
+            }
         }
     }
 }

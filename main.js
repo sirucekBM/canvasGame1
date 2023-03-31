@@ -10,7 +10,10 @@ window.addEventListener('load',function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 800;
     canvas.height = 500;
-    const startLives = 3;
+    const startLives = 10;
+    const fullScreenButton = this.document.getElementById('fullScreenButton');
+    fullScreenButton.addEventListener('click',toggleFullScreen);
+
 
     class Game{
         constructor(width,height,lives){
@@ -88,19 +91,19 @@ window.addEventListener('load',function(){
         }
 
         restart(){
-           // if(this.gameOver){
                 lastTime = 0;
                 this.player.x = 0;
                 this.player.y = this.height - this.player.height - this.groundMargin;
                 this.player.frameY = 0;
                 this.player.maxFrame = 5;
+                this.enemyTimer = 0;
                 this.gameOver = false;
                 this.lives = startLives;
                 this.enemies=[];
                 this.speed = 0;
                 this.player.speed = 0;
+                this.ammo = 30;
                 animate(0);
-            //}
         }
 
 
@@ -129,7 +132,15 @@ window.addEventListener('load',function(){
         if(!game.gameOver)requestAnimationFrame(animate);
     }
 
-
+    function toggleFullScreen(){
+        if(!document.fullscreenElement){
+            canvas.requestFullscreen().catch(err =>{
+                alert(`err neni full screen mode: ${err.message}`)
+            });
+        }else{
+            document.exitFullscreen();
+        }
+    }
 
    // document.addEventListener("keydown", (e) => {
    //     e.preventDefault();

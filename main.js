@@ -5,6 +5,7 @@ import { FlyingEnemy, GroundEnemy, ClimbingEnemy} from './enemies.js';
 import { LaserWeapon } from './weapons.js';
 import { UI } from './UI.js';
 
+
 window.addEventListener('load',function(){
     const canvas = this.document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
@@ -31,6 +32,7 @@ window.addEventListener('load',function(){
             this.particles = [];
             this.weapons = [];
             this.explosions = [];
+            this.listBox =[];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.debug = false;
@@ -63,11 +65,20 @@ window.addEventListener('load',function(){
             this.weapons.forEach((weapon, index) => {
                 weapon.update();
                 if(weapon.markedForDeletion) this.weapons.splice(index,1);
-            })
+            });
             this.explosions.forEach((explosion, index) => {
                 explosion.update();
                 if(explosion.markedForDeletion) this.explosions.splice(index,1);
+            });
+
+            this.listBox.forEach((box, index) => {
+                box.update();
+                if(box.markedForDeletion){
+                    this.listBox.splice(index,1);
+                }
             })
+
+
         }
         draw(context){
             this.background.draw(context);
@@ -87,6 +98,10 @@ window.addEventListener('load',function(){
                 explosion.draw(context);
             });
 
+            this.listBox.forEach((box, index) => {
+                box.draw(context);
+            })
+
             this.UI.draw(context);
         }
 
@@ -103,6 +118,7 @@ window.addEventListener('load',function(){
                 this.speed = 0;
                 this.player.speed = 0;
                 this.ammo = 30;
+                this.score = 0;
                 animate(0);
         }
 

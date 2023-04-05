@@ -22,6 +22,8 @@ export class UI{
             context.textAlign = 'center';
             context.font = this.fontSize * 2 + 'px ' + this.fontFamily; 
             context.fillText('GAME OVER ',this.game.width * 0.5 ,this.game.height * 0.5); 
+            context.font = this.fontSize + 'px ' + this.fontFamily; 
+            context.fillText('věnováno Korince věrnému psu ',this.game.width * 0.5 ,this.game.height * 0.5+30); 
        
         }
         context.restore();

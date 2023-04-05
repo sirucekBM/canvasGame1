@@ -51,7 +51,7 @@ export class InputHandler{
             }
             if (this.counterTouch ===2){
                 const timeDistanceTouch = Date.now() - this.timeStampDoubleTouch;
-                if (timeDistanceTouch > 50 && timeDistanceTouch < 400){
+                if (timeDistanceTouch < 600){
                     this.keys.indexOf(' ') === -1;
                     this.keys.push(' ');
                 }

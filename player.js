@@ -1,6 +1,7 @@
 import { Sitting, Running, Jumping,  Falling, Shooting } from "./playerStates.js";
 import { LaserWeapon } from './weapons.js';
 import { FireExplosion } from './explosion.js';
+import { Piece } from './piece.js';
 
 export class Player{
     constructor(game){
@@ -96,12 +97,14 @@ export class Player{
                     for (let i = 0; i < 5; i++) {
                         this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2,'red'));
                     }
+                    this.getListBoxs(enemy);
                 }else{
                     this.game.score++;
                     this.game.ammo +=1;
                     for (let i = 0; i < 5; i++) {
                         this.game.explosions.push(new FireExplosion(this.game, enemy.x + enemy.width/2, enemy.y + enemy.height/2,'green'));
                     }
+                    this.getListBoxs(enemy);
                 }
             }else{
 
@@ -111,6 +114,33 @@ export class Player{
 
         });
 
+    }
+    newRandom(min, max) {
+        return Math.floor(Math.random() * (min - max)+max);
+      }
+
+    getListBoxs(enemy) {
+        //let listBox =[];
+        for(let i=0;i<200;i++){
+            var box = {
+                x: 0,
+                y: 0,
+                sizeX: 4,
+                sizeY: 4,
+                R: 0,
+                G: 0,
+                B: 0,
+                A: 0.9
+            };    
+            box.x = this.newRandom(0,enemy.width);
+            box.y = this.newRandom(0,enemy.height);
+            box.R = this.newRandom(100,250);
+            box.G = this.newRandom(0,200);
+            box.B = this.newRandom(0,200);
+    
+            this.game.listBox.push(new  Piece(this.game,box,enemy.x ,enemy.y));
+      }
+      
     }
 
 }

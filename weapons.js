@@ -39,6 +39,7 @@ export class LaserWeapon extends Weapon{
                     this.game.ammo += 10;
                 }
 
+                this.game.player.getListBoxs(enemy);
 
             }else{
 
